@@ -1,38 +1,75 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: acnh-font;
+  src: url("./content/font.otf");
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: acnh-font-2;
+  src: url("./content/font-2.otf");
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  background-image: url("./content/background.png");
+  background-size: auto;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#timezone-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#bubble-container {
+  max-width: 350px;
+  min-width: 150px;
+  min-height: 250px;
+  background-color: #fafcf6;
+  border: #86be9b solid 10px;
+  margin-top: 50px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 50px;
+  filter: drop-shadow(1px 1px 5px black)
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#bubble-text {
+  width: 100%;
+  font-size: 250%;
+  line-height: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.text {
+  font-family: acnh-font;
+  color: #86be9b
+}
+
+#select-box{
+  color: #86be9b;
+  width: 90%;
+  font-family: acnh-font-2;
+  height: 40px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: #86be9b solid 2px;
+  background-color: white;
+}
+option {
+  color: #86be9b;
+  font-family: acnh-font-2;
+  margin: 100px;
+
+}
+
+#bubble-input {
+  color: #86be9b;
+  width: 150px;
+  height: 50px;
+  border-radius: 5px;
+  border: #86be9b solid 2px;
+  background-color: white;
+  font-family: acnh-font-2;
+
 }
