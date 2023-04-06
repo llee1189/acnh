@@ -133,7 +133,14 @@ function App() {
             </div>
           </div>
           <div id="what-the-catch-container">
-
+            {isMobile ? <></> : <>
+            <div className='what-the-catch-container-page'>
+              <div>Fish</div>
+              <div></div>
+            </div>
+            <div className='what-the-catch-container-page'></div>
+            <div className='what-the-catch-container-page'></div>
+            </>}
           </div>
         </div>
         </>}
