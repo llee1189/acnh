@@ -42,6 +42,22 @@ body {
   color: #86be9b
 }
 
+#navbar-time-container {
+  display: flex;
+  align-items: center;
+}
+
+#navbar-time {
+  font-family: acnh-font-2;
+  color: #86be9b;
+  background-color: #fafcf6;
+  border: #86be9b solid;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
 .text {
   font-family: acnh-font;
 }
@@ -88,21 +104,36 @@ option {
 
 #wrapper {
   width: 100%;
-  height: 100vh;
+  height: 880px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #navbar-container {
-  min-width: 100%;
+  width: 95%;
   min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#navbar-container-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.icon {
+  background-color: #fafcf6;
+  border: #86be9b solid;
+  border-radius: 10px;
+}
+
 .navbar-input-container {
   position: relative;
   text-align: center;
-  width: 10%;
+  width: 60px;
   height: 45px;
   border-radius: 20px;
   background-color: #fafcf6;
@@ -113,12 +144,11 @@ option {
 }
 
 .navbar-input-container img {
-  margin-left: 10px;
   max-height: 50%;
 }
 
 .navbar-input-container div {
-  color: #86be9b
+  color: #86be9b;
 }
 
 #what-the-catch-container {
@@ -129,30 +159,97 @@ option {
 }
 
 .what-the-catch-container-page {
-  width: 30%;
+  width: 550px;
   height: 100%;
-  background-color: white;
-  border: solid 1px black;
+  background-color: #fafcf6;
+  border: solid #86be9b;
+  border-radius: 20px;
+  display: flex;
+  justify-content:start;
+  align-items: center;
+  flex-direction: column;
 }
+
 
 .what-the-catch-container-page > div:first-of-type{
-  background-color: green;
   height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  font-family: acnh-font;
+  color: #86be9b;
 }
 
+.what-the-catch-container-page > div:first-of-type > div:first-of-type {
+line-height: 100%
+}
+
+.what-the-catch-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.what-the-catch-scroll-container {
+  height: 90%;
+  width: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  display: flex;
+
+  align-items: center;
+  flex-direction: column;
+}
+
+.what-the-catch-scroll {
+
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  border: solid #86be9b;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  color: #86be9b;
+}
+
+.what-the-catch-scroll img {
+  height: 50%;
+}
+
+.what-the-catch-scroll div {
+  font-family: acnh-font-2;
+  font-size: 100%;
+}
+
+.scroll {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+
+#test {
+  background-color: rgba(0, 0, 0, 0.438);
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+}
 
 @media (max-width: 500px) {
-  #what-the-catch-container {
-    min-height: 75%;
+  .what-the-catch-container-page {
+    width:400px;
   }
-  #navbar-container {
-    justify-content: space-around;
-  }
-  .navbar-input-container {
-    width: 23%
+  #wrapper {
+    height: 85vh;
   }
 
-  .navbar-input-container img {
-    margin-left: 0px;
+  .what-the-catch-container-page > div:first-of-type{
+    height: 10%;
+  }
+
+  .scroll {
+    font-size: 90%;
   }
 }
