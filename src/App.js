@@ -35,6 +35,9 @@ function App() {
   }, [date])
 
   useEffect(() => {
+    if (document.getElementById('mobile-scroll') != undefined) {
+      document.getElementById('mobile-scroll').scrollTop = 0;
+    }
     switch (mode) {
       case "fish":
         setModeColor("#4ba3c3")
@@ -450,12 +453,15 @@ function App() {
                           {ModeEct()}
                         </div>
                       </div>
-                      <div className='what-the-catch-scroll-container'>
+                      <div className='what-the-catch-scroll-container' id="mobile-scroll">
                         {Mode()}
                       </div>
                     </> :
                     <>
                       <div style={{ padding: "0px", margin: "0px", width: "90%", height: "10%", marginTop: "10px" }} id="navbar-time"> {new Date().toLocaleString("en-US", { timeZone: cookies.timeZone })}</div>
+                      <div className="text-2" style={{width: "90%", color: "#86be9b"}}> This website is built on React.js (along with HMTL and CSS of course) with MySQL running on AWS RDS and Node.js running on Render. I pretty much chucked all the data into MySQL and then make a request to pull data based off the current month and then parsed the data to see if that current
+                        animal could spawn. This website is also mostly mobile friendly.
+                         </div>
                     </>
                   }
                 </div>
@@ -464,12 +470,10 @@ function App() {
                   ?
                   <>
                     <div className='what-the-catch-container-page'>
-                      <div>
                         <div style={{ fontSize: "200%" }}>Info</div>
-                        <div className="scroll">
-
-                        </div>
-                      </div>
+                          <div className="text-2" style={{width: "90%", color: "#86be9b", height: "auto"}}> This website is built on React.js (along with HMTL and CSS of course) with MySQL running on AWS RDS and Node.js running on Render. I pretty much chucked all the data into MySQL and then make a request to pull data based off the current month and then parsed the data to see if that current
+                          animal could spawn. This website is also mostly mobile friendly.
+                          </div>
                       <div className='what-the-catch-scroll-container'>
                       </div>
                     </div>
