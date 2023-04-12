@@ -18,6 +18,13 @@ body {
   justify-content: center;
 }
 
+#bubble-checkbox {
+  display: flex;
+  font-family: acnh-font-2;
+  color: #86be9b;
+  font-size: 15px;
+}
+
 #bubble-container {
   max-width: 350px;
   min-width: 150px;
@@ -108,6 +115,7 @@ option {
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 #navbar-container {

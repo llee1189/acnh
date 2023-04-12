@@ -1,21 +1,30 @@
-import logo from './logo.svg';
+import Axios from "axios";
 import './App.css';
 import React, { useEffect, useState } from "react"; import { useCookies } from 'react-cookie';
 import { BiTimeFive, BiMenu, BiInfoCircle } from 'react-icons/bi';
 
 function App() {
-  const [cookies, setCookie] = useCookies([])
+  const [cookies, setCookie] = useCookies(['timeZone', 'hemi'])
   const [date, setDate] = useState(new Date())
   const [timezone, setTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone); const [showTimezone, setShowTimezone] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const [mode, setMode] = useState("fish"); const [modeColor, setModeColor] = useState("#4ba3c3"); const [showMenu, setShowMenu] = useState(false)
+  const mon = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+  const [fish, setFish] = useState([]); const [bug, setBug] = useState([]); const [sea, setSea] = useState([]);
+  const [isSouth, setIsSouth] = useState(false)
 
   useEffect(() => {
     if (cookies.timeZone == undefined) {
       setCookie('timeZone', 'empty', { path: '/' })
+      setCookie('hemi', 'north', { path: '/' })
     }
     if (window.matchMedia("(max-width: 700px)").matches) {
       setIsMobile(true)
+    }
+    if (cookies.timeZone != 'empty' && cookies.timeZone != undefined) {
+      FishRequest()
+      BugRequest()
+      SeaRequest()
     }
   }, [])
 
@@ -76,34 +85,217 @@ function App() {
 
   const onClickConfirmTimezone = () => {
     setCookie('timeZone', timezone, { path: '/' })
+    if (document.getElementById("checkbox").checked) {
+      setCookie('hemi', 'south', { path: '/' })
+    } else {
+      setCookie('hemi', 'north', { path: '/' })
+    }
     window.location.reload()
   }
 
   const Fish = () => {
     let temp = []
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < fish.length; i++) {
       temp.push(
         <div className="what-the-catch-scroll" style={{ color: "#4ba3c3", border: "#4ba3c3 solid" }}>
-          <img src={require("./png/fish/sea-bass.png")} />
-          <div style={{ width: "64px", textAlign: "center" }}>guppy</div>
-          <div style={{ width: "64px", textAlign: "center" }} >Lake (Mouth)</div>
-          <div style={{ width: "64px", textAlign: "center" }}>Very Large</div>
-          <div style={{ width: "64px", textAlign: "center" }}>60,000 Bells</div>
+          <img src={require("./png/fish/" + fish[i].name +".png")} />
+          <div style={{ width: "125px", textAlign: "center" }}>{(fish[i].name.replace('-', ' ')).replace('+', '-').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</div>
+          <div style={{ width: "64px", textAlign: "center" }} >{fish[i].location.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</div>
+          <div style={{ width: "64px", textAlign: "center" }}>{fish[i].shadow.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</div>
+          <div style={{ width: "64px", textAlign: "center" }}>{fish[i].price.toLocaleString()} Bells</div>
         </div>
       )
     }
     return temp;
   }
 
+  const FishRequest = () => {
+    let time = new Date().toLocaleString('en-US', {hour: '2-digit',   hour12: false, timeZone: cookies.timezone })
+    let temp = []
+    if (cookies.hemi == "north") {
+      Axios.post("https://acnh-server.onrender.com/fish", {
+        m: mon[new Date().toLocaleString('en-US', {month: 'numeric',   hour12: false, timeZone: cookies.timeZone }) - 1]
+      }).then((response) => {
+        response.data.forEach(d => {
+          if (d.time == "all") {
+            temp.push(d)
+          } else {
+            let start = d.time.split('-')[0]
+            let end = d.time.split('-')[1]
+            if (start > end) {
+              if (time >= start) {
+                temp.push(d)
+              } else if (time <= end) {
+                temp.push(d)
+              } else {
+                return
+              }
+          } else if (time >= start && time <= end) {
+              temp.push(d)
+          } else {
+              return
+          }
+          }
+        });
+    })
+    } else if (cookies.hemi == "south") {
+      Axios.post("https://acnh-server.onrender.com/fish1", {
+        m: mon[new Date().toLocaleString('en-US', {month: 'numeric',   hour12: false, timeZone: cookies.timeZone }) - 1]
+      }).then((response) => {
+        response.data.forEach(d => {
+          if (d.time == "all") {
+            temp.push(d)
+          } else {
+            let start = d.time.split('-')[0]
+            let end = d.time.split('-')[1]
+            if (start > end) {
+              if (time >= start) {
+                temp.push(d)
+              } else if (time <= end) {
+                temp.push(d)
+              } else {
+                return
+              }
+          } else if (time >= start && time <= end) {
+              temp.push(d)
+          } else {
+              return
+          }
+          }
+        });
+    })
+    }
+    setFish(temp)
+  }
+
+  const BugRequest = () => {
+    let time = new Date().toLocaleString('en-US', {hour: '2-digit',   hour12: false, timeZone: cookies.timezone })
+    let temp = []
+    if (cookies.hemi == "north") {
+      Axios.post("https://acnh-server.onrender.com/bug", {
+        m: mon[new Date().toLocaleString('en-US', {month: 'numeric',   hour12: false, timeZone: cookies.timeZone }) - 1]
+      }).then((response) => {
+        response.data.forEach(d => {
+          if (d.time == "all") {
+            temp.push(d)
+          } else {
+            let start = d.time.split('-')[0]
+            let end = d.time.split('-')[1]
+            if (start > end) {
+              if (time >= start) {
+                temp.push(d)
+              } else if (time <= end) {
+                temp.push(d)
+              } else {
+                return
+              }
+          } else if (time >= start && time <= end) {
+              temp.push(d)
+          } else {
+              return
+          }
+          }
+        });
+    })
+    } else if (cookies.hemi == "south") {
+      Axios.post("https://acnh-server.onrender.com/bug1", {
+        m: mon[new Date().toLocaleString('en-US', {month: 'numeric',   hour12: false, timeZone: cookies.timeZone }) - 1]
+      }).then((response) => {
+        response.data.forEach(d => {
+          if (d.time == "all") {
+            temp.push(d)
+          } else {
+            let start = d.time.split('-')[0]
+            let end = d.time.split('-')[1]
+            if (start > end) {
+              if (time >= start) {
+                temp.push(d)
+              } else if (time <= end) {
+                temp.push(d)
+              } else {
+                return
+              }
+          } else if (time >= start && time <= end) {
+              temp.push(d)
+          } else {
+              return
+          }
+          }
+        });
+    })
+    }
+    setBug(temp)
+  }
+
+  const SeaRequest = () => {
+    let time = new Date().toLocaleString('en-US', {hour: '2-digit',   hour12: false, timeZone: cookies.timezone })
+    let temp = []
+    if (cookies.hemi == "north") {
+      Axios.post("https://acnh-server.onrender.com/sea", {
+        m: mon[new Date().toLocaleString('en-US', {month: 'numeric',   hour12: false, timeZone: cookies.timeZone }) - 1]
+      }).then((response) => {
+        response.data.forEach(d => {
+          if (d.time == "all") {
+            temp.push(d)
+          } else {
+            let start = d.time.split('-')[0]
+            let end = d.time.split('-')[1]
+            if (start > end) {
+              if (time >= start) {
+                temp.push(d)
+              } else if (time <= end) {
+                temp.push(d)
+              } else {
+                return
+              }
+          } else if (time >= start && time <= end) {
+              temp.push(d)
+          } else {
+              return
+          }
+          }
+        });
+    })
+    } else if (cookies.hemi == "south") {
+      Axios.post("https://acnh-server.onrender.com/sea1", {
+        m: mon[new Date().toLocaleString('en-US', {month: 'numeric',   hour12: false, timeZone: cookies.timeZone }) - 1]
+      }).then((response) => {
+        response.data.forEach(d => {
+          if (d.time == "all") {
+            temp.push(d)
+          } else {
+            let start = d.time.split('-')[0]
+            let end = d.time.split('-')[1]
+            if (start > end) {
+              if (time >= start) {
+                temp.push(d)
+              } else if (time <= end) {
+                temp.push(d)
+              } else {
+                return
+              }
+          } else if (time >= start && time <= end) {
+              temp.push(d)
+          } else {
+              return
+          }
+          }
+        });
+    })
+    }
+    setSea(temp)
+    console.log(temp)
+  }
+
   const Bug = () => {
     let temp = []
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < bug.length; i++) {
       temp.push(
         <div className="what-the-catch-scroll" style={{ color: "#7cbe56", border: "#7cbe56 solid" }}>
-          <img src={require("./png/bug/banded-dragonfly.png")} />
-          <div style={{ width: "64px", textAlign: "center" }}>Banded Dragonfly</div>
-          <div style={{ width: "64px", textAlign: "center" }} >On the ground (rolling snowballs)</div>
-          <div style={{ width: "64px", textAlign: "center" }}>60,000 Bells</div>
+          <img src={require("./png/bug/"+ bug[i].name +".png")} />
+          <div style={{ width: "125px", textAlign: "center" }}>{(bug[i].name.replace('-', ' ')).replace('+', '-').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</div>
+          <div style={{ width: "100px", textAlign: "center" }} >{bug[i].location.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</div>
+          <div style={{ width: "64px", textAlign: "center" }}>{bug[i].price.toLocaleString()} Bells</div>
         </div>
       )
     }
@@ -112,14 +304,14 @@ function App() {
 
   const Sea = () => {
     let temp = []
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < sea.length; i++) {
       temp.push(
         <div className="what-the-catch-scroll" style={{ color: "#505dbe", border: "#505dbe solid" }}>
-          <img src={require("./png/sea/moon-jellyfish.png")} />
-          <div style={{ width: "64px", textAlign: "center" }}>Moon Jellyfish</div>
-          <div style={{ width: "80px", textAlign: "center" }} >Large</div>
-          <div style={{ width: "100px", textAlign: "center" }}>Slow consistent movement</div>
-          <div style={{ width: "64px", textAlign: "center" }}>60,000 Bells</div>
+          <img src={require("./png/sea/" + sea[i].name +".png")} />
+          <div style={{ width: "125px", textAlign: "center" }}>{(sea[i].name.replace('-', ' ')).replace('+', '-').toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</div>
+          <div style={{ width: "80px", textAlign: "center" }} >{sea[i].shadow.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</div>
+          <div style={{ width: "100px", textAlign: "center" }}>{sea[i].swimming.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</div>
+          <div style={{ width: "64px", textAlign: "center" }}>{sea[i].price.toLocaleString()} Bells</div>
         </div>
       )
     }
@@ -163,6 +355,7 @@ function App() {
         </>
     }
   }
+
 
   return (
     <>
@@ -212,6 +405,9 @@ function App() {
               <option value="Etc/GMT-14">UTC+14:00 {new Date().toLocaleString("en-US", { timeZone: "Etc/GMT-14" })}</option>
             </select>
             <input id="bubble-input" type="button" value="Confirm" onClick={() => onClickConfirmTimezone()} />
+            <div id="bubble-checkbox">
+            <input id="checkbox" type='checkbox' value="test" style={{marginRight: "10px"}}/> <div>Southern Hemisphere?</div>
+            </div>
           </div>
         </div> :
         <>
@@ -285,7 +481,7 @@ function App() {
                         <div style={{ fontSize: "200%", color: "#4ba3c3" }}>Fish</div>
                         <div className="scroll" style={{ color: "#4ba3c3" }}>
                           <div style={{ width: "64px", height: "1px" }}></div>
-                          <div style={{ width: "64px", textAlign: "center" }}>Name</div>
+                          <div style={{ width: "125px", textAlign: "center" }}>Name</div>
                           <div style={{ width: "64px", textAlign: "center" }}>Location</div>
                           <div style={{ width: "64px", textAlign: "center" }}>Shadow</div>
                           <div style={{ width: "64px", textAlign: "center" }}>Price</div>
@@ -300,9 +496,9 @@ function App() {
                         <div style={{ fontSize: "200%", color: "#7cbe56" }}>Insects</div>
                         <div className="scroll" style={{ color: "#7cbe56" }}>
                           <div style={{ width: "64px", height: "1px" }}></div>
-                          <div style={{ width: "20%", textAlign: "center" }}>Name</div>
-                          <div style={{ width: "20%", textAlign: "center" }}>Location</div>
-                          <div style={{ width: "15%", textAlign: "center" }}>Price</div>
+                          <div style={{ width: "125px", textAlign: "center" }}>Name</div>
+                          <div style={{ width: "64px", textAlign: "center" }}>Location</div>
+                          <div style={{ width: "64px", textAlign: "center" }}>Price</div>
                         </div>
                       </div>
                       <div className='what-the-catch-scroll-container'>
@@ -314,10 +510,10 @@ function App() {
                         <div style={{ fontSize: "200%", color: "#505dbe" }}>Sea Creatures</div>
                         <div className="scroll" style={{ color: "#505dbe" }}>
                           <div style={{ width: "64px", height: "1px" }}></div>
-                          <div style={{ width: "15%", textAlign: "center" }}>Name</div>
-                          <div style={{ width: "15%", textAlign: "center" }}>Shadow</div>
-                          <div style={{ width: "20%", textAlign: "center" }}>Swimming</div>
-                          <div style={{ width: "15%", textAlign: "center" }}>Price</div>
+                          <div style={{ width: "125px", textAlign: "center" }}>Name</div>
+                          <div style={{ width: "80px", textAlign: "center" }}>Shadow</div>
+                          <div style={{ width: "100px", textAlign: "center" }}>Swimming</div>
+                          <div style={{ width: "64px", textAlign: "center" }}>Price</div>
                         </div>
                       </div>
                       <div className='what-the-catch-scroll-container'>
