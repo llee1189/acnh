@@ -245,6 +245,10 @@ line-height: 100%
   position: absolute;
 }
 
+#back:hover {
+  cursor: pointer;
+}
+
 @media (max-width: 500px) {
   .what-the-catch-container-page {
     width:400px;

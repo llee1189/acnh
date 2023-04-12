@@ -471,9 +471,15 @@ function App() {
                   <>
                     <div className='what-the-catch-container-page'>
                         <div style={{ fontSize: "200%" }}>Info</div>
-                          <div className="text-2" style={{width: "90%", color: "#86be9b", height: "auto"}}> This website is built on React.js (along with HMTL and CSS of course) with MySQL running on AWS RDS and Node.js running on Render. I pretty much chucked all the data into MySQL and then make a request to pull data based off the current month and then parsed the data to see if that current
+                          <div className="text-2" style={{width: "90%", color: "#86be9b"}}> This website is built on React.js (along with HMTL and CSS of course) with MySQL running on AWS RDS and Node.js running on Render. I pretty much chucked all the data into MySQL and then make a request to pull data based off the current month and then parsed the data to see if that current
                           animal could spawn. This website is also mostly mobile friendly.
                           </div>
+                          <div className="text" style={{ fontSize: "200%", color: "#86be9b" }}>References</div>
+                          <a href="https://nookipedia.com/wiki/Fish/New_Horizons">https://nookipedia.com/wiki/Fish/New_Horizons</a>
+                          <a href="https://nookipedia.com/wiki/Bug/New_Horizons">https://nookipedia.com/wiki/Bug/New_Horizons</a>
+                          <a href="https://nookipedia.com/wiki/Sea_creature/New_Horizons">https://nookipedia.com/wiki/Sea_creature/New_Horizons</a>
+                          <br/>
+                          <div className="text" id="back" style={{color: "#86be9b"}} onClick={() => {setShowMenu(false)}}>Go Back</div>
                       <div className='what-the-catch-scroll-container'>
                       </div>
                     </div>
