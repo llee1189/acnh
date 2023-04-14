@@ -11,6 +11,7 @@ function App() {
   const [mode, setMode] = useState("fish"); const [modeColor, setModeColor] = useState("#4ba3c3"); const [showMenu, setShowMenu] = useState(false)
   const mon = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
   const [fish, setFish] = useState([]); const [bug, setBug] = useState([]); const [sea, setSea] = useState([]);
+  const [showFish, setShowFish] = useState(false); const [showBug, setShowBug] = useState(false); const [showSea, setShowSea] = useState(false); 
   const [isSouth, setIsSouth] = useState(false)
 
   useEffect(() => {
@@ -119,6 +120,7 @@ function App() {
       Axios.post("https://acnh-server.onrender.com/fish", {
         m: mon[new Date().toLocaleString('en-US', {month: 'numeric',   hour12: false, timeZone: cookies.timeZone }) - 1]
       }).then((response) => {
+        setShowFish(true)
         response.data.forEach(d => {
           if (d.time == "all") {
             temp.push(d)
@@ -178,6 +180,7 @@ function App() {
       Axios.post("https://acnh-server.onrender.com/bug", {
         m: mon[new Date().toLocaleString('en-US', {month: 'numeric',   hour12: false, timeZone: cookies.timeZone }) - 1]
       }).then((response) => {
+        setShowBug(true)
         response.data.forEach(d => {
           if (d.time == "all") {
             temp.push(d)
@@ -237,6 +240,7 @@ function App() {
       Axios.post("https://acnh-server.onrender.com/sea", {
         m: mon[new Date().toLocaleString('en-US', {month: 'numeric',   hour12: false, timeZone: cookies.timeZone }) - 1]
       }).then((response) => {
+        setShowSea(true)
         response.data.forEach(d => {
           if (d.time == "all") {
             temp.push(d)
@@ -454,7 +458,7 @@ function App() {
                         </div>
                       </div>
                       <div className='what-the-catch-scroll-container' id="mobile-scroll">
-                        {Mode()}
+                        {showFish && showBug && showSea ? Mode() : <div className="text-2" style={{ color: modeColor, textAlign: "center"}}><div>Loading...</div><div>Free can be slow...</div></div>}
                       </div>
                     </> :
                     <>
@@ -498,7 +502,7 @@ function App() {
                         </div>
                       </div>
                       <div className='what-the-catch-scroll-container'>
-                        {Fish()}
+                        {!showFish ? <div className="text-2" style={{ color: "#4ba3c3" }}>Loading...</div> : Fish()}
                       </div>
                     </div>
                     <div className='what-the-catch-container-page' style={{ border: "#7cbe56 solid" }}>
@@ -512,7 +516,7 @@ function App() {
                         </div>
                       </div>
                       <div className='what-the-catch-scroll-container'>
-                        {Bug()}
+                        {!showBug ? <div className="text-2" style={{ color: "#7cbe56" }}>Loading...</div> : Bug()}
                       </div>
                     </div>
                     <div className='what-the-catch-container-page' style={{ border: "#505dbe solid" }}>
@@ -527,7 +531,7 @@ function App() {
                         </div>
                       </div>
                       <div className='what-the-catch-scroll-container'>
-                        {Sea()}
+                      {!showSea ? <div className="text-2" style={{ color: "#505dbe" }}>Loading...</div> : Sea()}
                       </div>
                     </div></>}
               </>}
