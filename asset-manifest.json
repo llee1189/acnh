@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/acnh/static/css/main.aa4f8375.css",
-    "main.js": "/acnh/static/js/main.823c7c7f.js",
+    "main.js": "/acnh/static/js/main.10c64caa.js",
     "static/js/787.b4c5211c.chunk.js": "/acnh/static/js/787.b4c5211c.chunk.js",
     "static/media/font-2.otf": "/acnh/static/media/font-2.66a4c7a7f9dc5ceec0d7.otf",
     "static/media/font.otf": "/acnh/static/media/font.391597ea44593031ef64.otf",
@@ -89,11 +89,11 @@
     "static/media/sea-pineapple.png": "/acnh/static/media/sea-pineapple.88726887fe6a2b4a3a28.png",
     "index.html": "/acnh/index.html",
     "main.aa4f8375.css.map": "/acnh/static/css/main.aa4f8375.css.map",
-    "main.823c7c7f.js.map": "/acnh/static/js/main.823c7c7f.js.map",
+    "main.10c64caa.js.map": "/acnh/static/js/main.10c64caa.js.map",
     "787.b4c5211c.chunk.js.map": "/acnh/static/js/787.b4c5211c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.aa4f8375.css",
-    "static/js/main.823c7c7f.js"
+    "static/js/main.10c64caa.js"
   ]
 }
